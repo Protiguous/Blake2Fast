@@ -34,8 +34,7 @@ namespace Blake2Fast
 #else
 				TypeCache<T>.IsReferenceOrContainsReferences
 #endif
-			)
-				throw new NotSupportedException("This method may only be used with value types that do not contain reference type fields.");
+			) throw new NotSupportedException("This method may only be used with value types that do not contain reference type fields.");
 		}
 
 		public static void HashFinalized() => throw new InvalidOperationException("Hash has already been finalized.");

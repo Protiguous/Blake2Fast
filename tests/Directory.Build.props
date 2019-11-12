@@ -1,23 +1,16 @@
 <Project>
+	<Import Project="$(MSBuildThisFileDirectory)..\build\Common.props" />
 
-	<PropertyGroup>
-		<LangVersion>8</LangVersion>
-		<Features>strict</Features>
-		<Nullable>annotations</Nullable>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
-		<Configuration Condition="'$(Configuration)'==''">Release</Configuration>
-		<BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\out\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-		<BaseOutputPath>$(MSBuildThisFileDirectory)..\out\bin\$(MSBuildProjectName)\</BaseOutputPath>
-		<IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
-		<OutputPath>$(BaseOutputPath)$(Configuration)\</OutputPath>
-		<OutDir>$(OutputPath)$(TargetFramework)\</OutDir>
-		<AssemblyInfoFile>$(IntermediateOutputPath)$(TargetFramework)\_AssemblyInfo.cs</AssemblyInfoFile>
+	<PropertyGroup Condition="'$(Configuration)'=='Coverage'">
+		<CollectCoverage>true</CollectCoverage>
+		<UseSourceLink>true</UseSourceLink>
+		<CoverletOutputFormat>opencover</CoverletOutputFormat>
+		<CoverletOutput>$(MSBuildThisFileDirectory)..\out\coverage\opencover.$(TargetFramework)$(CoverageFileSuffix).xml</CoverletOutput>
+		<Exclude>[$(AssemblyName)]</Exclude>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)'=='Release'">
-		<DebugType>pdbonly</DebugType>
-		<DebugSymbols>true</DebugSymbols>
-	</PropertyGroup>
+	<ItemGroup Condition="'$(Configuration)'=='Coverage'">
+		<PackageReference Include="coverlet.msbuild" Version="2.7.0" />
+	</ItemGroup>
 
 </Project>
